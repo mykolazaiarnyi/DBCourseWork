@@ -10,7 +10,6 @@ namespace DataLayer.Entities {
         public DateTime Time { get; set; }
         public int GroupId { get; set; }
         public int ByUserId { get; set; }
-        public int ForUserId { get; set; }
         public decimal Amount { get; set; }
     }
 }

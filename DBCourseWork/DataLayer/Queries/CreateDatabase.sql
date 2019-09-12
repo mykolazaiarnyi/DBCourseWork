@@ -1,13 +1,13 @@
 ﻿create database db_course_work
 
 create table users (
-	id int,
+	id int identity(1, 1),
 	[name] nchar(30),
 	constraint PK_USERS primary key (id)
 )
 
 create table groups (
-	id int,
+	id int identity(1, 1),
 	[name] nchar(30),
 	constraint PK_GROUPS primary key (id)
 )
@@ -27,7 +27,7 @@ create table user_groups (
 )
 
 create table expenses_header (
-	id int,
+	id int identity(1, 1),
 	[description] nchar(50),
 	[time] smalldatetime,
 	group_id int,
@@ -58,7 +58,7 @@ create table expenses_line (
 
 
 create table payments (
-	id int,
+	id int identity(1, 1),
 	[description] nchar(50),
 	[time] smalldatetime,
 	group_id int,
