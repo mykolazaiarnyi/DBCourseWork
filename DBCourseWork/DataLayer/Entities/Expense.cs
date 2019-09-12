@@ -9,7 +9,8 @@ namespace DataLayer.Entities {
         public string Description { get; set; }
         public DateTime Time { get; set; }
         public int GroupId { get; set; }
-        public int UserId { get; set; }
+        public int ByUserId { get; set; }
+        public int ForUserId { get; set; }
         public decimal Amount { get; set; }
     }
 }
