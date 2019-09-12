@@ -8,19 +8,19 @@ using System.Data.SqlClient;
 
 namespace DataLayer.Implementation {
     class ExpenseRepository : IExpenseRepository {
-        public Task CreateAsync(Expense item) {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(int id) {
-            throw new NotImplementedException();
-        }
-
         public Task<Expense> GetByIdAsync(int id) {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Expense item) {
+        Task<Expense> IRepository<Expense, int>.CreateAsync(Expense item) {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IRepository<Expense, int>.DeleteAsync(int id) {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IRepository<Expense, int>.UpdateAsync(Expense item) {
             throw new NotImplementedException();
         }
     }

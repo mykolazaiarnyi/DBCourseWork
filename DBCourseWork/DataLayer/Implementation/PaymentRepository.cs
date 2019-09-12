@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Implementation {
     public class PaymentRepository : IPaymentRepository {
-        public Task CreateAsync(Payment item) {
+        public Task<Payment> CreateAsync(Payment item) {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id) {
+        public Task<bool> DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
@@ -19,7 +19,7 @@ namespace DataLayer.Implementation {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Payment item) {
+        public Task<bool> UpdateAsync(Payment item) {
             throw new NotImplementedException();
         }
     }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 namespace DataLayer.Abstraction {
     public interface IRepository <TEntity, TKey> where TEntity: IEntity<TKey> {
         Task<TEntity> GetByIdAsync(TKey id);
-        Task CreateAsync(TEntity item);
-        Task DeleteAsync(TKey id);
-        Task UpdateAsync(TEntity item);
+        Task<TEntity> CreateAsync(TEntity item);
+        Task<bool> DeleteAsync(TKey id);
+        Task<bool> UpdateAsync(TEntity item);
     }
 }

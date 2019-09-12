@@ -11,11 +11,11 @@ namespace DataLayer.Implementation {
             throw new NotImplementedException();
         }
 
-        public Task CreateAsync(Group item) {
+        public Task<Group> CreateAsync(Group item) {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id) {
+        public Task<bool> DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
@@ -31,7 +31,7 @@ namespace DataLayer.Implementation {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Group item) {
+        public Task<bool> UpdateAsync(Group item) {
             throw new NotImplementedException();
         }
     }
