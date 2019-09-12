@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataLayer.Implementation {
     public abstract class BaseRepository {
-        private readonly string _connectionString;
+        protected readonly string _connectionString;
 
         public BaseRepository() {
             _connectionString = new ConfigurationBuilder()

@@ -20,7 +20,7 @@ return (
 )
 go
 
-create function get_users_balance (@user_id_1 int, @user_id_2 int, @group_id int)
+create or alter function get_users_balance (@user_id_1 int, @user_id_2 int, @group_id int)
 returns money
 as
 begin
@@ -50,5 +50,15 @@ begin
 			and p.group_id = @group_id
 			and p.confirmed = 1
 
+	if @spent_by_1 is null
+		set @spent_by_1 = 0
+	if @spent_by_2 is null
+		set @spent_by_2 = 0
+	if @payed_by_1 is null
+		set @payed_by_1 = 0
+	if @payed_by_2 is null
+		set @payed_by_2 = 0
+
 	return (@spent_by_1 - @payed_by_2) - (@spent_by_2 - @payed_by_1)
 end
+go
