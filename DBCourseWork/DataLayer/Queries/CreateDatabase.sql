@@ -51,7 +51,8 @@ create table payments (
 	group_id int,
 	[user_id] int,
 	to_user_id int,
-	amount money
+	amount money,
+	confirmed bit,
 	constraint PK_PAYMENTS primary key (id),
 	constraint FK_PAYMENTS_GROUPS foreign key (group_id)
 		references groups (id)

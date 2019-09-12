@@ -43,12 +43,14 @@ begin
 		where p.[user_id] = @user_id_1 
 			and p.to_user_id = @user_id_2 
 			and p.group_id = @group_id
+			and p.confirmed = 1
 
 	declare @payed_by_2 money
 	select @payed_by_2 = sum(p.amount) from payments as p
 		where p.[user_id] = @user_id_2 
 			and p.to_user_id = @user_id_1 
 			and p.group_id = @group_id
+			and p.confirmed = 1
 
 	return (@spent_by_1 - @payed_by_2) - (@spent_by_2 - @payed_by_1)
 end
