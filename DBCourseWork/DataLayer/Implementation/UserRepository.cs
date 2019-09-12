@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlTypes;
+using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace DataLayer.Implementation {
     public class UserRepository : IUserRepository {
-
         public Task CreateAsync(User item) {
-            throw new NotImplementedException();
+            using(SqlConnection connection = new SqlConnection()) {
+
+            }
         }
 
         public Task DeleteAsync(int id) {
