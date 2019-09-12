@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataLayer.Abstraction {
-    public interface IUserRepository : IRepository<User, int> {
+    public interface IUserRepository : IEditableRepository<User, int> {
         Task<IEnumerable<Group>> GetGroupsAsync(int id);
     }
 }

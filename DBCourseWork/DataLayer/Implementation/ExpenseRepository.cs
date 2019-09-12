@@ -12,15 +12,7 @@ namespace DataLayer.Implementation {
             throw new NotImplementedException();
         }
 
-        Task<Expense> IRepository<Expense, int>.CreateAsync(Expense item) {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IRepository<Expense, int>.DeleteAsync(int id) {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IRepository<Expense, int>.UpdateAsync(Expense item) {
+        public Task<Expense> CreateAsync(Expense item) {
             throw new NotImplementedException();
         }
     }
