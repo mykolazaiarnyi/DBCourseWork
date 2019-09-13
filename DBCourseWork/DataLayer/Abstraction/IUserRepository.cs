@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 namespace DataLayer.Abstraction {
     public interface IUserRepository : IEditableRepository<User, int> {
         Task<IEnumerable<Group>> GetGroupsAsync(int id);
+        Task<decimal> GetBalanceAsync(int userId1, int userId2, int groupId);
     }
 }

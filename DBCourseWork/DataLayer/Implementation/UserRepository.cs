@@ -36,6 +36,18 @@ namespace DataLayer.Implementation {
             return result == 1;
         }
 
+        public async Task<decimal> GetBalanceAsync(int userId1, int userId2, int groupId) {
+            decimal result;
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand($"set transaction isolation level serializable; begin transaction; select dbo.get_users_balance({userId1}, {userId2}, {groupId}); commit", connection)) {
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    result = (decimal)await command.ExecuteScalarAsync();
+                }
+            }
+            return result;
+        }
+
         public async Task<User> GetByIdAsync(int id) {
             User item = null;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
