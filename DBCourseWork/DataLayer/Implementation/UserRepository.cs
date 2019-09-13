@@ -41,7 +41,6 @@ namespace DataLayer.Implementation {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand($"set transaction isolation level serializable; begin transaction; select dbo.get_users_balance({userId1}, {userId2}, {groupId}); commit", connection)) {
-                    SqlDataReader reader = await command.ExecuteReaderAsync();
                     result = (decimal)await command.ExecuteScalarAsync();
                 }
             }

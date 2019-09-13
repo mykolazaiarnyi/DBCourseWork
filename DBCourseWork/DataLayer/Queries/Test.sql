@@ -25,4 +25,4 @@ select * from expenses_header
 select * from expenses_line
 
 
-set transaction isolation level serializable; begin transaction; select dbo.get_users_balance(2, 4, 1); commit
+set transaction isolation level serializable; begin transaction; select dbo.get_users_balance(2, 3, 1); commit

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace DataLayer.Implementation {
-    class ExpenseRepository : BaseRepository, IExpenseRepository {
+    public class ExpenseRepository : BaseRepository, IExpenseRepository {
         public async Task<Expense> GetByIdAsync(int id) {
             Expense item = null;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
