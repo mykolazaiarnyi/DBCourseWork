@@ -75,6 +75,20 @@ namespace DataLayer.Implementation {
             return groups;
         }
 
+        public async Task<User> GetByNameAsync(string name) {
+            User item = null;
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand($"select * from users where name = N'{name}'", connection)) {
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    if (await reader.ReadAsync()) {
+                        item = new User() { Id = (int)reader["id"], Name = (string)reader["name"] };
+                    }
+                }
+            }
+            return item;
+        }
+
         public async Task<bool> UpdateAsync(User item) {
             int result;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {

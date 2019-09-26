@@ -10,8 +10,6 @@ namespace Tests {
         static PaymentRepository paymentRepository = new PaymentRepository();
         static ExpenseRepository expenseRepository = new ExpenseRepository();
         static async Task Main(string[] args) {
-            await TestGroupRepository();
-
 
         }
 

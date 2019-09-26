@@ -5,12 +5,17 @@ create table users (
 	[name] nchar(30),
 	constraint PK_USERS primary key (id)
 )
+go
+
+create unique nonclustered index users_name_index on users ([name])
+go
 
 create table groups (
 	id int identity(1, 1),
 	[name] nchar(30),
 	constraint PK_GROUPS primary key (id)
 )
+
 
 create table user_groups (
 	[user_id] int,
