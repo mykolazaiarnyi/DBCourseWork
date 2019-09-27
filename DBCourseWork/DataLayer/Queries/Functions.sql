@@ -9,14 +9,15 @@ return (
 )
 go
 
-create function get_users_of_group (@id int)
+create or alter function get_users_of_group (@group_id int, @user_id int)
 returns table
 as
 return (
 	select u.id, u.[name] from user_groups as ug
 		join users as u
 		on ug.[user_id] = u.id
-		where ug.group_id = @id
+		where ug.group_id = @group_id
+			and ug.[user_id] <> @user_id
 )
 go
 

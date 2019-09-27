@@ -55,11 +55,11 @@ namespace DataLayer.Implementation {
             return item;
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync(int id) {
+        public async Task<IEnumerable<User>> GetUsersAsync(int groupId, int userId) {
             List<User> users = new List<User>();
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand($"select * from get_users_of_group({id})", connection)) {
+                using (SqlCommand command = new SqlCommand($"select * from get_users_of_group({groupId}, {userId})", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (await reader.ReadAsync()) {
                         users.Add(new User() { Id = (int)reader["id"], Name = (string)reader["name"] });
