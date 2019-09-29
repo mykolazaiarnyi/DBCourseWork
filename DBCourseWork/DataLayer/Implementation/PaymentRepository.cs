@@ -30,7 +30,7 @@ namespace DataLayer.Implementation {
                 using (SqlCommand command = new SqlCommand($"select * from expenses_total where id = {id}", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     if (await reader.ReadAsync()) {
-                        item = new Payment() { Id = (int)reader["id"], Description = (string)reader["description"], Time = (DateTime)reader["time"], Amount = (decimal)reader["amount"], ByUserId = (int)reader["by_user_id"], GroupId = (int)reader["group_id"], ForUserId =  (int)reader["for_user_id"]};
+                        item = new Payment() { Id = (int)reader["id"], Description = ((string)reader["description"]).TrimEnd(), Time = (DateTime)reader["time"], Amount = (decimal)reader["amount"], ByUserId = (int)reader["by_user_id"], GroupId = (int)reader["group_id"], ForUserId =  (int)reader["for_user_id"]};
                     }
                 }
             }

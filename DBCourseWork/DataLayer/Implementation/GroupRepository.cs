@@ -48,7 +48,7 @@ namespace DataLayer.Implementation {
                 using (SqlCommand command = new SqlCommand($"select * from groups where id = {id}", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     if (await reader.ReadAsync()) {
-                        item = new Group() { Id = (int)reader["id"], Name = (string)reader["name"] };
+                        item = new Group() { Id = (int)reader["id"], Name = ((string)reader["name"]).TrimEnd() };
                     }
                 }
             }
@@ -62,7 +62,7 @@ namespace DataLayer.Implementation {
                 using (SqlCommand command = new SqlCommand($"select * from get_users_of_group({groupId}, {userId})", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (await reader.ReadAsync()) {
-                        users.Add(new User() { Id = (int)reader["id"], Name = (string)reader["name"] });
+                        users.Add(new User() { Id = (int)reader["id"], Name = ((string)reader["name"]).TrimEnd() });
                     }
                 }
             }

@@ -6,7 +6,7 @@ insert into groups([name]) values (N'Za ekzamen'), (N'Picnic')
 
 insert into user_groups ([user_id], group_id) values (2, 1), (3, 1), (4, 1)
 
-select * from get_users_of_group(1)
+select * from get_users_of_group(1, 3)
 select * from get_users_of_group(2)
 
 insert into user_groups ([user_id], group_id) values (1, 2), (4, 2)

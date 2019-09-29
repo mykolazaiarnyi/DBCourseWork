@@ -11,7 +11,7 @@ namespace DataLayer.Implementation {
         public BaseRepository() {
             _connectionString = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("config.json")
+                .AddJsonFile("appsettings.json")
                 .Build().GetConnectionString("DefaultConnection");
         }
     }
