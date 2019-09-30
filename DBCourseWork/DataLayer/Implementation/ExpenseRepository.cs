@@ -36,5 +36,25 @@ namespace DataLayer.Implementation {
             }
             return item;
         }
+
+        public async Task<IEnumerable<Expense>> GetExpensesOfGroupAsync(int groupId) {
+            var expenses = new List<Expense>();
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand($"select * from expenses_total where group_id = {groupId}", connection)) {
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    while (await reader.ReadAsync()) {
+                        expenses.Add(new Expense() { 
+                            Id = (int)reader["id"], 
+                            Description = ((string)reader["description"]).TrimEnd(), 
+                            Time = (DateTime)reader["time"], 
+                            Amount = (decimal)reader["amount"], 
+                            ByUserId = (int)reader["by_user_id"], 
+                            GroupId = (int)reader["group_id"] });
+                    }
+                }
+            }
+            return expenses;
+        }
     }
 }

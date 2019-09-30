@@ -6,6 +6,7 @@ using Application.DTOs;
 using AutoMapper;
 using DataLayer.Abstraction;
 using DataLayer.Entities;
+using DBCourseWorkAPI.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,7 +35,7 @@ namespace Application.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> LoginAsync(string name) {
+        public async Task<ActionResult<UserDto>> LoginAsync([FromBody] string name) {
             if (string.IsNullOrWhiteSpace(name))
                 return BadRequest("Invalid name");
             User user = await _userRepository.GetByNameAsync(name);
@@ -51,7 +52,7 @@ namespace Application.Controllers
             return _mapper.Map<IEnumerable<GroupDto>>(groups).ToList();
         }
 
-        [HttpGet("user/{userId}/group/{groupId}")]
+        [HttpGet("user/{userId}/group/{groupId}/users")]
         public async Task<ActionResult<IEnumerable<UserWithBalanceDto>>> GetUsersOfGroupAsync(int userId, int groupId) {
             
             var users = await _groupRepository.GetUsersAsync(groupId, userId);
@@ -66,5 +67,45 @@ namespace Application.Controllers
 
             return usersWithBalance.ToList();
         }
+
+        [HttpGet("user/{userId}/group/{groupId}/expenses")]
+        public async Task<ActionResult<IEnumerable<ExpenseDto>>> GetExpensesAsync(int userId, int groupId) {
+            var expenses = await _expenseRepository.GetExpensesOfGroupAsync(groupId);
+            var mappedExpenses = new List<ExpenseDto>();
+            foreach (var i in expenses) {
+                mappedExpenses.Add(new ExpenseDto() {
+                    Amount = i.Amount,
+                    Description = i.Description,
+                    Time = i.Time,
+                    ByUserName = i.ByUserId == userId ? "You" : (await _userRepository.GetByIdAsync(i.ByUserId)).Name
+                });
+            }
+            return mappedExpenses;
+        }
+
+        [HttpGet("user/{userId}/group/{groupId}/payments")]
+        public async Task<ActionResult<IEnumerable<Payment>>> GetPaymentsAsync(int userId, int groupId) {
+            
+        }
+
+        [HttpPut("user/{id}")]
+        public async Task<ActionResult<bool>> ChangeUserNameAsync(int id) {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost("user/{id}/groups")]
+        public async Task<ActionResult<GroupDto>> CreateGroupAsync(int id, [FromBody] string name) {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost("user/{userId}/group/{groupId}")]
+        public async Task<ActionResult<bool>> AddUserAsync(int userId, int groupId, [FromBody] string name) {
+            throw new NotImplementedException();
+        }
+
+        //Add payment
+        //Add expense
+        //Confirm payment
+        //Delete group
     }
 }
