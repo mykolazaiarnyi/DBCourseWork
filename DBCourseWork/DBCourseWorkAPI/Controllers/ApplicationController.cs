@@ -83,7 +83,20 @@ namespace Application.Controllers
 
         [HttpGet("user/{userId}/group/{groupId}/payments")]
         public async Task<ActionResult<IEnumerable<PaymentDto>>> GetPaymentsAsync(int userId, int groupId) {
-            await _paymentRepository.
+            var payments = await _paymentRepository.GetPaymentsOfUser(userId, groupId);
+            var mappedPayments = new List<PaymentDto>();
+            foreach (var i in payments) {
+                mappedPayments.Add(new PaymentDto() {
+                    Id = i.Id,
+                    Description = i.Description,
+                    Time = i.Time,
+                    Amount = i.Amount,
+                    ByUser = i.ByUserId == userId ? "You" : (await _userRepository.GetByIdAsync(i.ByUserId)).Name,
+                    ForUser = i.ForUserId == userId ? "You" : (await _userRepository.GetByIdAsync(i.ForUserId)).Name,
+                    Confirmed = i.Confirmed
+                });
+            }
+            return mappedPayments;
         }
 
         [HttpPut("user/{id}")]

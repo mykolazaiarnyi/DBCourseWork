@@ -54,7 +54,7 @@ namespace DataLayer.Implementation {
             var payments = new List<Payment>();
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using(SqlCommand command = new SqlCommand($"select * from payments where group_id = {groupId} and ([user_id] = {userId} or to_user_id = {userId})", connection)) {
+                using(SqlCommand command = new SqlCommand($"select * from payments where group_id = {groupId} and ([user_id] = {userId} or to_user_id = {userId}) order by [time]", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (await reader.ReadAsync()) {
                         payments.Add(new Payment {
