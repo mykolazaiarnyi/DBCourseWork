@@ -41,11 +41,15 @@ namespace DataLayer.Implementation {
             return item;
         }
 
-        public Task<bool> UpdateAsync(Payment item) {
+        public async Task<bool> UpdateAsync(Payment item) {
+            int result = 0;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand($"update payments set "))
+                using (SqlCommand command = new SqlCommand($"update payments set confirmed = N'{item.Confirmed}' where id = {item.Id}", connection)) {
+                    result = await command.ExecuteNonQueryAsync();
+                }
             }
+            return result == 1;
         }
     }
 }
