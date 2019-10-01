@@ -83,3 +83,7 @@ create table payments (
 	constraint FK_PAYMENTS_TO_USERS foreign key (to_user_id)
 		references users (id)
 )
+go
+
+alter table payments add constraint DF_PAYMENTS_CONFIRMED default 0 for confirmed
+alter table payments add constraint DF_PAYMENTS_TIME default cast(getdate() as smalldatetime) for [time]

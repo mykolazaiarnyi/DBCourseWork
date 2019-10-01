@@ -23,11 +23,15 @@ namespace DataLayer.Implementation {
             return item;
         }
 
+        public Task<bool> DeleteAsync(int id) {
+            throw new NotImplementedException();
+        }
+
         public async Task<Payment> GetByIdAsync(int id) {
             Payment item = null;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand($"select * from expenses_total where id = {id}", connection)) {
+                using (SqlCommand command = new SqlCommand($"select * from payments where id = {id}", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     if (await reader.ReadAsync()) {
                         item = new Payment() { Id = (int)reader["id"], Description = ((string)reader["description"]).TrimEnd(), Time = (DateTime)reader["time"], Amount = (decimal)reader["amount"], ByUserId = (int)reader["by_user_id"], GroupId = (int)reader["group_id"], ForUserId =  (int)reader["for_user_id"]};
@@ -35,6 +39,13 @@ namespace DataLayer.Implementation {
                 }
             }
             return item;
+        }
+
+        public Task<bool> UpdateAsync(Payment item) {
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand($"update payments set "))
+            }
         }
     }
 }

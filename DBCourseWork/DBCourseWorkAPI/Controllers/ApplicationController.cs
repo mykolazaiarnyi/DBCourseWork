@@ -84,8 +84,8 @@ namespace Application.Controllers
         }
 
         [HttpGet("user/{userId}/group/{groupId}/payments")]
-        public async Task<ActionResult<IEnumerable<Payment>>> GetPaymentsAsync(int userId, int groupId) {
-            
+        public async Task<ActionResult<IEnumerable<PaymentDto>>> GetPaymentsAsync(int userId, int groupId) {
+            await _paymentRepository.
         }
 
         [HttpPut("user/{id}")]
