@@ -34,18 +34,50 @@ namespace DataLayer.Implementation {
                 using (SqlCommand command = new SqlCommand($"select * from payments where id = {id}", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     if (await reader.ReadAsync()) {
-                        item = new Payment() { Id = (int)reader["id"], Description = ((string)reader["description"]).TrimEnd(), Time = (DateTime)reader["time"], Amount = (decimal)reader["amount"], ByUserId = (int)reader["by_user_id"], GroupId = (int)reader["group_id"], ForUserId =  (int)reader["for_user_id"]};
+                        item = new Payment() { 
+                            Id = (int)reader["id"], 
+                            Description = ((string)reader["description"]).TrimEnd(), 
+                            Time = (DateTime)reader["time"], 
+                            Amount = (decimal)reader["amount"], 
+                            ByUserId = (int)reader["by_user_id"], 
+                            GroupId = (int)reader["group_id"], 
+                            ForUserId = (int)reader["for_user_id"],
+                            Confirmed = (int)reader["confirmed"] == 1
+                        };
                     }
                 }
             }
             return item;
         }
 
+        public async Task<IEnumerable<Payment>> GetPaymentsOfUser(int userId, int groupId) {
+            var payments = new List<Payment>();
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using(SqlCommand command = new SqlCommand($"select * from payments where group_id = {groupId} and ([user_id] = {userId} or to_user_id = {userId})", connection)) {
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+                    while (await reader.ReadAsync()) {
+                        payments.Add(new Payment {
+                            Id = (int)reader["id"],
+                            Description = ((string)reader["description"]).TrimEnd(),
+                            Time = (DateTime)reader["time"],
+                            Amount = (decimal)reader["amount"],
+                            ByUserId = (int)reader["by_user_id"],
+                            GroupId = (int)reader["group_id"],
+                            ForUserId = (int)reader["for_user_id"],
+                            Confirmed = (int)reader["confirmed"] == 1
+                        });
+                    }
+                }
+            }
+            return payments;
+        }
+
         public async Task<bool> UpdateAsync(Payment item) {
             int result = 0;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand($"update payments set confirmed = N'{item.Confirmed}' where id = {item.Id}", connection)) {
+                using (SqlCommand command = new SqlCommand($"update payments set confirmed = N'{(item.Confirmed? 1 : 0)}' where id = {item.Id}", connection)) {
                     result = await command.ExecuteNonQueryAsync();
                 }
             }

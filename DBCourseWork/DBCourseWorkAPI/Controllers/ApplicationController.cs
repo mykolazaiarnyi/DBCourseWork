@@ -36,8 +36,6 @@ namespace Application.Controllers
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> LoginAsync([FromBody] string name) {
-            if (string.IsNullOrWhiteSpace(name))
-                return BadRequest("Invalid name");
             User user = await _userRepository.GetByNameAsync(name);
             if (user == null)
                 user = await _userRepository.CreateAsync(user);
