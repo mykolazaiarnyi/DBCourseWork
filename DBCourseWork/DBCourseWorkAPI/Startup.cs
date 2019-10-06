@@ -25,6 +25,8 @@ namespace DBCourseWorkAPI {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors();
+
             ConfigureRepositories(services);
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -39,6 +41,7 @@ namespace DBCourseWorkAPI {
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseHttpsRedirection();
             app.UseMvc();
         }
