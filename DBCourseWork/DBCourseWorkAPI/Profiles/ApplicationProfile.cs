@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DBCourseWorkAPI.Profiles {
     public class ApplicationProfile : Profile {
         public ApplicationProfile() {
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Group, GroupDto>();
             CreateMap<User, UserWithBalanceDto>().IncludeBase<User, UserDto>();
             CreateMap<Expense, ExpenseDto>();

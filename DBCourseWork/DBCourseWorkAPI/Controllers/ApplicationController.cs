@@ -99,22 +99,51 @@ namespace Application.Controllers
             return mappedPayments;
         }
 
-        [HttpPut("user/{id}")]
-        public async Task<ActionResult<bool>> ChangeUserNameAsync(int id) {
-            throw new NotImplementedException();
+        [HttpPut("user")]
+        public async Task<ActionResult> ChangeUserNameAsync(UserDto user) {
+            var userEntity = await _userRepository.GetByIdAsync(user.Id);
+            if (userEntity == null)
+                return BadRequest();
+
+            userEntity = await _userRepository.GetByNameAsync(user.Name);
+            if (userEntity != null)
+                return BadRequest();
+
+            await _userRepository.UpdateAsync(_mapper.Map<User>(user));
+            return Ok();
         }
 
         [HttpPost("user/{id}/groups")]
         public async Task<ActionResult<GroupDto>> CreateGroupAsync(int id, [FromBody] string name) {
-            throw new NotImplementedException();
+            var group = await _groupRepository.CreateAsync(new Group() { Name = name });
+            await _groupRepository.AddUserAsync(group.Id, id);
+            return _mapper.Map<GroupDto>(group);
         }
 
         [HttpPost("user/{userId}/group/{groupId}")]
-        public async Task<ActionResult<bool>> AddUserAsync(int userId, int groupId, [FromBody] string name) {
+        public async Task<ActionResult> AddUserAsync(int userId, int groupId, [FromBody] string name) {
+            var user = await _userRepository.GetByNameAsync(name);
+            if (user == null || user.Id == userId)
+                return BadRequest();
+
+            var group = await _groupRepository.GetByIdAsync(groupId);
+            if (group == null)
+                return BadRequest();
+
+            group.Users = await _groupRepository.GetUsersAsync(group.Id, userId);
+            if (group.Users.Any(u => u.Id == user.Id))
+                return BadRequest();
+
+            await _groupRepository.AddUserAsync(group.Id, user.Id);
+
+            return Ok();
+        }
+
+        [HttpPost("payment")]
+        public async Task<ActionResult<PaymentDto>> AddPaymentAsync(PaymentDto payment) {
             throw new NotImplementedException();
         }
 
-        //Add payment
         //Add expense
         //Confirm payment
         //Delete group
