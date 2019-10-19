@@ -41,7 +41,11 @@ namespace DBCourseWorkAPI {
                 app.UseHsts();
             }
 
-            app.UseCors(builder => builder.AllowAnyOrigin());
+            app.UseCors(builder => {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }

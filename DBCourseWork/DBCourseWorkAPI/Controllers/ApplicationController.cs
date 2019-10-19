@@ -36,10 +36,10 @@ namespace Application.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> LoginAsync([FromBody] string name) {
-            User user = await _userRepository.GetByNameAsync(name);
+        public async Task<ActionResult<UserDto>> LoginAsync([FromBody] UserDto userDto) {
+            User user = await _userRepository.GetByNameAsync(userDto.Name);
             if (user == null)
-                user = await _userRepository.CreateAsync(user);
+                user = await _userRepository.CreateAsync(new User() { Name = userDto.Name});
 
             return _mapper.Map<UserDto>(user);
         }
@@ -102,15 +102,15 @@ namespace Application.Controllers
         }
 
         [HttpPost("user/{id}/groups")]
-        public async Task<ActionResult<GroupDto>> CreateGroupAsync(int id, [FromBody] string name) {
-            var group = await _groupRepository.CreateAsync(new Group() { Name = name });
+        public async Task<ActionResult<GroupDto>> CreateGroupAsync(int id, [FromBody] GroupDto groupDto) {
+            var group = await _groupRepository.CreateAsync(new Group() { Name = groupDto.Name });
             await _groupRepository.AddUserAsync(group.Id, id);
             return _mapper.Map<GroupDto>(group);
         }
 
         [HttpPost("user/{userId}/group/{groupId}")]
-        public async Task<ActionResult> AddUserAsync(int userId, int groupId, [FromBody] string name) {
-            var user = await _userRepository.GetByNameAsync(name);
+        public async Task<ActionResult> AddUserAsync(int userId, int groupId, [FromBody] UserDto userDto) {
+            var user = await _userRepository.GetByNameAsync(userDto.Name);
             if (user == null || user.Id == userId)
                 return BadRequest();
 

@@ -21,7 +21,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   login(data){
-    console.log(data.name);
-    this.http.get('https://localhost:5001/api/user/2/groups').subscribe(response => console.log(response));
+    this.http.post('https://localhost:5001/api/login', {name: data.name}).subscribe(response => console.log(response));
   }
 }
