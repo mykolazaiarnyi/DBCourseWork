@@ -11,9 +11,10 @@ namespace DBCourseWorkAPI.Profiles {
     public class ApplicationProfile : Profile {
         public ApplicationProfile() {
             CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<Group, GroupDto>();
+            CreateMap<Group, GroupDto>().ReverseMap();
             CreateMap<User, UserWithBalanceDto>().IncludeBase<User, UserDto>();
-            CreateMap<Expense, ExpenseDto>();
+            CreateMap<Expense, ExpenseDto>().ReverseMap();
+            CreateMap<Payment, PaymentDto>().ReverseMap();
         }
     }
 }

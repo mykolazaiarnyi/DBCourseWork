@@ -7,6 +7,7 @@ using AutoMapper;
 using DataLayer.Abstraction;
 using DataLayer.Entities;
 using DBCourseWorkAPI.DTOs;
+using DBCourseWorkAPI.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -69,38 +70,25 @@ namespace Application.Controllers
         [HttpGet("user/{userId}/group/{groupId}/expenses")]
         public async Task<ActionResult<IEnumerable<ExpenseDto>>> GetExpensesAsync(int userId, int groupId) {
             var expenses = await _expenseRepository.GetExpensesOfGroupAsync(groupId);
-            var mappedExpenses = new List<ExpenseDto>();
+            var mappedExpenseTasks = new List<Task<ExpenseDto>>();
             foreach (var i in expenses) {
-                mappedExpenses.Add(new ExpenseDto() {
-                    Amount = i.Amount,
-                    Description = i.Description,
-                    Time = i.Time,
-                    ByUserName = i.ByUserId == userId ? "You" : (await _userRepository.GetByIdAsync(i.ByUserId)).Name
-                });
+                mappedExpenseTasks.Add(_mapper.ExpenseToDtoAsync(i, _userRepository));
             }
-            return mappedExpenses;
+            return await Task.WhenAll(mappedExpenseTasks);
         }
 
         [HttpGet("user/{userId}/group/{groupId}/payments")]
         public async Task<ActionResult<IEnumerable<PaymentDto>>> GetPaymentsAsync(int userId, int groupId) {
             var payments = await _paymentRepository.GetPaymentsOfUser(userId, groupId);
-            var mappedPayments = new List<PaymentDto>();
+            var mappedPaymentTasks = new List<Task<PaymentDto>>();
             foreach (var i in payments) {
-                mappedPayments.Add(new PaymentDto() {
-                    Id = i.Id,
-                    Description = i.Description,
-                    Time = i.Time,
-                    Amount = i.Amount,
-                    ByUser = i.ByUserId == userId ? "You" : (await _userRepository.GetByIdAsync(i.ByUserId)).Name,
-                    ForUser = i.ForUserId == userId ? "You" : (await _userRepository.GetByIdAsync(i.ForUserId)).Name,
-                    Confirmed = i.Confirmed
-                });
+                mappedPaymentTasks.Add(_mapper.PaymentToDtoAsync(i, _userRepository));
             }
-            return mappedPayments;
+            return await Task.WhenAll(mappedPaymentTasks);
         }
 
         [HttpPut("user")]
-        public async Task<ActionResult> ChangeUserNameAsync(UserDto user) {
+        public async Task<ActionResult> ChangeUserNameAsync([FromBody]UserDto user) {
             var userEntity = await _userRepository.GetByIdAsync(user.Id);
             if (userEntity == null)
                 return BadRequest();
@@ -140,12 +128,28 @@ namespace Application.Controllers
         }
 
         [HttpPost("payment")]
-        public async Task<ActionResult<PaymentDto>> AddPaymentAsync(PaymentDto payment) {
-            throw new NotImplementedException();
+        public async Task<ActionResult<PaymentDto>> AddPaymentAsync([FromBody]PaymentDto payment) {
+            var mappedPayment = await _mapper.DtoToPaymentAsync(payment, _userRepository);
+            mappedPayment = await _paymentRepository.CreateAsync(mappedPayment);
+            return await _mapper.PaymentToDtoAsync(mappedPayment, _userRepository);
         }
 
-        //Add expense
-        //Confirm payment
-        //Delete group
+        [HttpPost("expense")]
+        public async Task<ActionResult<ExpenseDto>> AddExpenseAsync([FromBody]ExpenseDto expense) {
+            var mappedExpense = await _mapper.DtoToExpenseAsync(expense, _userRepository);
+            mappedExpense = await _expenseRepository.CreateAsync(mappedExpense);
+            return await _mapper.ExpenseToDtoAsync(mappedExpense, _userRepository);
+        }
+
+        [HttpPost("payment/{id}")]
+        public async Task<ActionResult> ConfirmPaymentAsync(int id) {
+            var payment = await _paymentRepository.GetByIdAsync(id);
+            if (payment == null) {
+                return BadRequest();
+            }
+            payment.Confirmed = true;
+            await _paymentRepository.UpdateAsync(payment);
+            return Ok();
+        }
     }
 }
