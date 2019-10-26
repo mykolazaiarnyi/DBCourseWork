@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { UserSessionService } from '../user-session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +13,8 @@ export class LoginPageComponent implements OnInit {
   loginForm;
 
   constructor(private formBuilder: FormBuilder,
-              private http: HttpClient) { 
+              private userSession: UserSessionService,
+              private router: Router) { 
     this.loginForm = this.formBuilder.group({
       name: ''
     });
@@ -21,6 +24,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   login(data){
-    this.http.post('https://localhost:5001/api/login', {name: data.name}).subscribe(response => console.log(response));
+    this.userSession.login(data.name);
+    this.router.navigate(["/groups"]);
   }
 }
