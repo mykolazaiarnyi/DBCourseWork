@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+const API_URL = "https://localhost:5001/api";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +12,12 @@ export class UserSessionService {
 
   constructor(private http: HttpClient) { }
 
-  login(name){
-    this.http.post('https://localhost:5001/api/login', {name}).subscribe(response => this.user = response);
+  async login(name){
+    this.user = await this.http.post(`${API_URL}/login`, {name}).toPromise().then();
+    console.log(this.user);
+  }
+
+  getGroups(){
+    return this.http.get(`${API_URL}/user/${this.user.id}/groups`);
   }
 }

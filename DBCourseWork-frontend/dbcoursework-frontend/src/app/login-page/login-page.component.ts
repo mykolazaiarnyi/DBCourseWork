@@ -24,7 +24,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   login(data){
-    this.userSession.login(data.name);
-    this.router.navigate(["/groups"]);
+    this.userSession.login(data.name).then(() => this.router.navigate(["/groups"]));
   }
 }
