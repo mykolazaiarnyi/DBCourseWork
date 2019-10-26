@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupsComponent } from './groups/groups.component';
+import { GroupComponent } from './group/group.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    GroupsComponent
+    GroupsComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,
