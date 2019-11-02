@@ -1,10 +1,21 @@
-<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-    <div>
-        <label for="name">
-            Name
-        </label>
-        <input id="name" type="text" formControlName="name">
-    </div>
-
-    <button class="button" type="submit">Login</button>
-</form>
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col"></div>
+        <aside class="col-sm-5">
+            <div class="card">
+                <article class="card-body">
+                    <h4 class="card-title mb-4 mt-1">Sign in</h4>
+                    <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+                        <div class="form-group">
+                            <input id="name" type="text" formControlName="name" name="" class="form-control" placeholder="Name">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                        </div> <!-- form-group// -->                                                           
+                    </form>
+                </article>
+            </div> <!-- card.// -->
+        </aside> <!-- col.// -->
+        <div class="col"></div>
+    </div> <!-- row.// --> 
+</div> 
