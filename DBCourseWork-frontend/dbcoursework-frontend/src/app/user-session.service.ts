@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 
 const API_URL = "https://localhost:5001/api";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserSessionService {
+export class UserSessionService implements CanActivate {
+
   user;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: Router) { }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.user || this.route.navigate(['/login']);
+  }
+  
 
   async login(name: string){
     this.user = await this.http.post(`${API_URL}/login`, {name}).toPromise();
