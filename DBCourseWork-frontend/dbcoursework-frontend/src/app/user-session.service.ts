@@ -12,12 +12,23 @@ export class UserSessionService {
 
   constructor(private http: HttpClient) { }
 
-  async login(name){
-    this.user = await this.http.post(`${API_URL}/login`, {name}).toPromise().then();
-    console.log(this.user);
+  async login(name: string){
+    this.user = await this.http.post(`${API_URL}/login`, {name}).toPromise();
   }
 
   getGroups(){
     return this.http.get(`${API_URL}/user/${this.user.id}/groups`);
+  }
+
+  getUsersOfGroup(id: Number){
+    return this.http.get(`${API_URL}/user/${this.user.id}/group/${id}/users`);
+  }
+
+  getExpensesOfGroup(id: Number){
+    return this.http.get(`${API_URL}/user/${this.user.id}/group/${id}/expenses`);
+  }
+
+  getPaymentsOfGroup(id: Number){
+    return this.http.get(`${API_URL}/user/${this.user.id}/group/${id}/payments`);
   }
 }

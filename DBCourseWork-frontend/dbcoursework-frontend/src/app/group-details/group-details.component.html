@@ -1,0 +1,18 @@
+<div [ngSwitch]="tab">
+    <div *ngSwitchCase="groupTabType.Users">
+        <div *ngFor="let user of users">
+            <div> {{ user.name }} </div>  
+            <dv> {{ user.balance }} </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="groupTabType.Expenses"> 
+        <div *ngFor="let expense of expenses">
+            {{expense}}
+        </div>
+    </div>
+    <div *ngSwitchCase="groupTabType.Payments">
+        <div *ngFor="let payment of payments">
+            {{payment}}
+        </div>
+    </div>
+</div>
