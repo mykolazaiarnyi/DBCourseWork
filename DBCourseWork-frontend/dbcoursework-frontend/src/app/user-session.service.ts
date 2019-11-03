@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 
 const API_URL = "https://localhost:5001/api";
@@ -15,12 +15,20 @@ export class UserSessionService implements CanActivate {
   constructor(private http: HttpClient, private route: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.user || this.route.navigate(['/login']);
+    if (!this.user){
+      this.route.navigate(['/login']);
+      return of(false);
+    }
+    return of(true);
   }
   
 
   async login(name: string){
     this.user = await this.http.post(`${API_URL}/login`, {name}).toPromise();
+  }
+
+  logout(){
+    this.user = undefined;
   }
 
   getGroups(){
