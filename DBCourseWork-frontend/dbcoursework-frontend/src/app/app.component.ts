@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserSessionService } from './user-session.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'dbcoursework-frontend';
+
+  constructor(private userSession: UserSessionService){
+
+  }
+
+  logout(){
+    this.userSession.logout();
+  }
 }

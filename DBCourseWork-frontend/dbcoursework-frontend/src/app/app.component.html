@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand">Expense Calculator</a>
-    <a class="nav-link" routerLink="/profile">Profile</a>
-    <a class="nav-link" routerLink="/groups">Groups</a>
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand">Expense Calculator</a>
+        <a class="nav-link" routerLink="/profile">Profile</a>
+        <a class="nav-link" routerLink="/groups">Groups</a>
+    </div>
+    <a class="nav-link" routerLink="/login" (click)="logout()">Logout</a>
 </nav>
 <router-outlet></router-outlet>
