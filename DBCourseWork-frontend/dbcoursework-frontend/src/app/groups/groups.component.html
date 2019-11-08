@@ -1,14 +1,21 @@
 <div class="container">
-    <div class="jumbotron">
-        <h1>Groups</h1>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-body">
+    <div class="card">
+        <h1 class="card-header p-4">
+            Groups
+        </h1>
+        <div class="list-group my-2">
             <div *ngFor="let group of groups">
-                <a routerLink="/group/{{group.id}}">
+                <a class="list-group-item list-group-item-action m-2 w-auto" routerLink="/group/{{group.id}}">
                     <h3>{{ group.name }}</h3>
                 </a>
             </div>
         </div>
+    </div>
+    <div class="row justify-content-center">
+        <aside class="col-sm-4 mt-1">
+            <a class="nav-link" href="/new-group">
+                <button class="btn btn-primary btn-block"> New group </button>
+            </a>
+        </aside>
     </div>
 </div>
