@@ -53,16 +53,14 @@ namespace Application.Controllers
 
         [HttpGet("user/{userId}/group/{groupId}/users")]
         public async Task<ActionResult<IEnumerable<UserWithBalanceDto>>> GetUsersOfGroupAsync(int userId, int groupId) {
-            
             var users = await _groupRepository.GetUsersAsync(groupId, userId);
+            var usersWithBalance = _mapper.Map<IEnumerable<User>, IEnumerable<UserWithBalanceDto>>(users);
 
-            var usersWithBalance = _mapper.Map<IEnumerable<User>, IEnumerable<UserWithBalanceDto>>(users, opts =>
-                    opts.AfterMap(async (src, dest) => {
-                        var d = dest as IEnumerable<UserWithBalanceDto>;
-                        foreach(var i in d) 
-                            i.Balance = await _userRepository.GetBalanceAsync(userId, i.Id, groupId);
-                    })
-                );
+            var getBalanceTasks = new List<Task>();
+            foreach (var i in usersWithBalance) {
+                getBalanceTasks.Add(Task.Run(async () => i.Balance = await _userRepository.GetBalanceAsync(userId, i.Id, groupId)));
+            }
+            await Task.WhenAll(getBalanceTasks);
 
             return usersWithBalance.ToList();
         }
