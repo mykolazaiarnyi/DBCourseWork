@@ -1,6 +1,7 @@
 ﻿insert into users([name]) 
 	values (N'Mykola'), (N'Oleh'), (N'Andrii'), (N'Nazar')
 select * from users
+delete users where id = 7
 
 insert into groups([name]) values (N'Za ekzamen'), (N'Picnic')
 

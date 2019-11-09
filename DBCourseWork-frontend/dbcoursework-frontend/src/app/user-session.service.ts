@@ -56,4 +56,8 @@ export class UserSessionService implements CanActivate {
       catchError(error => of(false))
     )
   }
+
+  createGroup(name: string): Observable<Group> {
+    return this.http.post<Group>(`${API_URL}/user/${this.user.id}/groups`, { name });
+  }
 }

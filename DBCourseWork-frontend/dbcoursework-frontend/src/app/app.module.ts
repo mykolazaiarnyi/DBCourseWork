@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ProfileComponent } from './profile/profile.component';
     LoginPageComponent,
     GroupsComponent,
     GroupDetailsComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreateGroupComponent
   ],
   imports: [
     BrowserModule,

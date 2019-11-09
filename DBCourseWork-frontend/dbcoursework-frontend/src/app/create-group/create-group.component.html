@@ -1,0 +1,16 @@
+<div class="container">
+    <h1 class="card-header p-4">Create group</h1>
+    <div class="card-body m-5 row justify-content-center">
+        <aside class="col-sm-4">
+            <form [formGroup]="createGroupForm" (ngSubmit)="createGroup(createGroupForm.value)">
+                <div class="form-group mb-2">
+                    <input type="text"
+                        formControlName="name"
+                        class="form-control"
+                        placeholder="Name">
+                </div>
+                <button class="btn btn-primary btn-block my-3" [disabled]="createGroupForm.invalid"> Create Group </button>
+            </form>
+        </aside>
+    </div>
+</div>
