@@ -9,7 +9,7 @@
                             <input id="name" type="text" formControlName="name" name="" class="form-control" placeholder="Name">
                         </div> <!-- form-group// -->
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                            <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block"> Login </button>
                         </div> <!-- form-group// -->                                                           
                     </form>
                 </article>

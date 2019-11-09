@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { UserSessionService } from '../user-session.service';
 import { Router } from '@angular/router';
@@ -10,13 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-  loginForm;
+  loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private userSession: UserSessionService,
               private router: Router) { 
     this.loginForm = this.formBuilder.group({
-      name: ''
+      name: ['', Validators.required]
     });
   }
 
