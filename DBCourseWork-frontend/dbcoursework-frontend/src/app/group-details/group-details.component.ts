@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserSessionService } from '../user-session.service';
 import { ActivatedRoute } from '@angular/router';
-import { User, Payment, Expense } from 'src/types';
+import { User, Payment, Expense, Group } from 'src/types';
 
 enum GroupTabType { Users, Payments, Expenses }
 
@@ -13,6 +13,7 @@ enum GroupTabType { Users, Payments, Expenses }
 export class GroupDetailsComponent implements OnInit {
  
   groupTabType = GroupTabType;
+  group: Group;
   users: User[];
   payments: Payment[];
   expenses: Expense[];
@@ -20,7 +21,8 @@ export class GroupDetailsComponent implements OnInit {
 
   constructor(private userSession: UserSessionService,
               private route: ActivatedRoute) {
-    let groupId: Number = Number(route.snapshot.paramMap.get('id'));
+    let groupId: number = Number(route.snapshot.paramMap.get('id'));
+    this.group = this.userSession.groups[groupId];
     userSession.getUsersOfGroup(groupId).subscribe(response => this.users = response);
     userSession.getPaymentsOfGroup(groupId).subscribe(response => this.payments = response);
     userSession.getExpensesOfGroup(groupId).subscribe(response => this.expenses = response);

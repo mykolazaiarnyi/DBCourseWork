@@ -12,6 +12,10 @@ export class GroupsComponent implements OnInit {
   groups: Group[];
 
   constructor(private userSession: UserSessionService) {
+    this.loadGroups()
+  }
+
+  loadGroups(){
     this.userSession.getGroups().subscribe(response => this.groups = response);
   }
 

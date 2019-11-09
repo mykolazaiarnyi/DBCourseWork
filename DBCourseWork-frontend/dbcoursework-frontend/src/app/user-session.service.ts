@@ -13,6 +13,7 @@ const API_URL = "https://localhost:5001/api";
 export class UserSessionService implements CanActivate {
 
   user: User;
+  groups: {[key: number]: Group} = {};
 
   constructor(private http: HttpClient, private route: Router) { }
 
@@ -34,7 +35,9 @@ export class UserSessionService implements CanActivate {
   }
 
   getGroups(){
-    return this.http.get<Group[]>(`${API_URL}/user/${this.user.id}/groups`);
+    return this.http.get<Group[]>(`${API_URL}/user/${this.user.id}/groups`).pipe(
+      tap(response => response.forEach(i => this.groups[i.id] = i))
+    );
   }
 
   getUsersOfGroup(id: Number){
@@ -58,6 +61,8 @@ export class UserSessionService implements CanActivate {
   }
 
   createGroup(name: string): Observable<Group> {
-    return this.http.post<Group>(`${API_URL}/user/${this.user.id}/groups`, { name });
+    return this.http.post<Group>(`${API_URL}/user/${this.user.id}/groups`, { name }).pipe(
+      tap(response => this.groups[response.id] = response)
+    );
   }
 }
