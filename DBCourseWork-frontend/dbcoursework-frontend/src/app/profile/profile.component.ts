@@ -43,6 +43,10 @@ export class ProfileComponent implements OnInit {
       )
   }
 
+  onTextChange(){
+    this.nameUsed = false;
+  }
+
   isNotCurrentUser(name: string): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       if (control.value === name){
