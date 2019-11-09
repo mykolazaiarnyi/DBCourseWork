@@ -10,6 +10,7 @@ import { GroupsComponent } from './groups/groups.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 <div class="container">
+    <h1 class="card-header p-4">{{ group.name }}</h1>
     <mat-tab-group>
         <mat-tab label="Groups">
-            <h1 class="card-header p-4">{{ group.name }}</h1>
             <div class="list-group my-2">
                 <div *ngFor="let user of users">
                     <div class="list-group-item list-group-item-action m-2 w-auto d-flex justify-content-between" routerLink="/group/{{group.id}}">
@@ -15,6 +15,9 @@
                     </div>
                 </div>
             </div>
+        </mat-tab>
+        <mat-tab label="Expenses">
+            <p>Expenses tab works!</p>
         </mat-tab>
     </mat-tab-group>
     <!--div *ngSwitchCase="groupTabType.Expenses"> 
