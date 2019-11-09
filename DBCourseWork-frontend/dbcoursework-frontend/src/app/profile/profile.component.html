@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="card">
+        <h1 class="card-header"> Profile </h1>
+    </div>
+
+    <div class="card-body m-5">
+        <form class="form-inline" [formGroup]="changeNameForm" (ngSubmit)="changeName(changeNameForm.value)">
+            <div class="form-group mx-sm-3 mb-2" >
+                <input class="form-control"
+                    [ngClass]="{'border': nameUsed, 'border-danger': nameUsed}" 
+                    type="text" 
+                    formControlName="name"
+                    class="form-control" 
+                    placeholder="Name">
+            </div>
+            <button [disabled]="changeNameForm.invalid" type="submit" class="btn btn-primary mb-2"> Change name </button>
+        </form>
+        <div *ngIf="nameUsed">
+            <p class="ml-3 text-danger">This name is already used!</p>
+        </div>
+    </div>
+</div>

@@ -8,13 +8,15 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     GroupsComponent,
-    GroupDetailsComponent
+    GroupDetailsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

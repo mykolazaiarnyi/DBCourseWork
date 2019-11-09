@@ -6,7 +6,7 @@
                     <h4 class="card-title mb-4 mt-1 text-center">Sign in</h4>
                     <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
                         <div class="form-group">
-                            <input id="name" type="text" formControlName="name" name="" class="form-control" placeholder="Name">
+                            <input id="name" type="text" formControlName="name" class="form-control" placeholder="Name">
                         </div> <!-- form-group// -->
                         <div class="form-group">
                             <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block"> Login </button>

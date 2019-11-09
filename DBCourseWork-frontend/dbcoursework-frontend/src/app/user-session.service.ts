@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { User, Group, Expense, Payment } from 'src/types';
 
@@ -46,5 +47,13 @@ export class UserSessionService implements CanActivate {
 
   getPaymentsOfGroup(id: Number){
     return this.http.get<Payment[]>(`${API_URL}/user/${this.user.id}/group/${id}/payments`);
+  }
+
+  changeName(user: User): Observable<boolean> {
+    return this.http.put(`${API_URL}/user`, user).pipe(
+      map(response => !response),
+      tap(result => this.user.name = user.name),
+      catchError(error => of(false))
+    )
   }
 }
