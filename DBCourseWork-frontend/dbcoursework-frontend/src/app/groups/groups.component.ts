@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserSessionService } from '../user-session.service';
+import { Group } from 'src/types';
 
 @Component({
   selector: 'app-groups',
@@ -8,7 +9,7 @@ import { UserSessionService } from '../user-session.service';
 })
 export class GroupsComponent implements OnInit {
 
-  groups;
+  groups: Group[];
 
   constructor(private userSession: UserSessionService) {
     this.userSession.getGroups().subscribe(response => this.groups = response);

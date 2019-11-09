@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserSessionService } from '../user-session.service';
 import { ActivatedRoute } from '@angular/router';
+import { User, Payment, Expense } from 'src/types';
 
 enum GroupTabType { Users, Payments, Expenses }
 
@@ -12,9 +13,9 @@ enum GroupTabType { Users, Payments, Expenses }
 export class GroupDetailsComponent implements OnInit {
  
   groupTabType = GroupTabType;
-  users;
-  payments;
-  expenses;
+  users: User[];
+  payments: Payment[];
+  expenses: Expense[];
   tab: GroupTabType = GroupTabType.Users;
 
   constructor(private userSession: UserSessionService,
