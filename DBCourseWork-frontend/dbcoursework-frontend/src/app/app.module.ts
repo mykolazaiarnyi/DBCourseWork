@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatTabsModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -21,6 +21,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     CreateGroupComponent
   ],
   imports: [
+    MatTabsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

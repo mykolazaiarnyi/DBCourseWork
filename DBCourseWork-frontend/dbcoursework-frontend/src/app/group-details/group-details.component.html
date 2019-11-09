@@ -1,18 +1,22 @@
 <div class="container">
-    <h1 class="card-header p-4">{{ group.name }}</h1>
-    <div class="list-group my-2">
-        <div *ngFor="let user of users">
-            <div class="list-group-item list-group-item-action m-2 w-auto d-flex justify-content-between" routerLink="/group/{{group.id}}">
-                <h3 class="d-inline"> {{ user.name }} </h3>
-                <h3 class="d-inline" 
-                    [ngClass]="{
-                        'text-danger': user.balance < 0, 
-                        'text-warning': user.balance === 0,
-                        'text-success': user.balance > 0
-                    }"> {{ user.balance }} </h3>
+    <mat-tab-group>
+        <mat-tab label="Groups">
+            <h1 class="card-header p-4">{{ group.name }}</h1>
+            <div class="list-group my-2">
+                <div *ngFor="let user of users">
+                    <div class="list-group-item list-group-item-action m-2 w-auto d-flex justify-content-between" routerLink="/group/{{group.id}}">
+                        <h3 class="d-inline"> {{ user.name }} </h3>
+                        <h3 class="d-inline" 
+                            [ngClass]="{
+                                'text-danger': user.balance < 0, 
+                                'text-warning': user.balance === 0,
+                                'text-success': user.balance > 0
+                            }"> {{ user.balance }} </h3>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </mat-tab>
+    </mat-tab-group>
     <!--div *ngSwitchCase="groupTabType.Expenses"> 
         <div *ngFor="let expense of expenses">
             {{expense}}
