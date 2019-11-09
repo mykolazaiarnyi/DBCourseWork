@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { User, Group, Expense, Payment } from 'src/types';
+import { User, Group, Expense, Payment, UserWithBalance } from 'src/types';
 
 const API_URL = "https://localhost:5001/api";
 
@@ -41,7 +41,7 @@ export class UserSessionService implements CanActivate {
   }
 
   getUsersOfGroup(id: Number){
-    return this.http.get<User[]>(`${API_URL}/user/${this.user.id}/group/${id}/users`);
+    return this.http.get<UserWithBalance[]>(`${API_URL}/user/${this.user.id}/group/${id}/users`);
   }
 
   getExpensesOfGroup(id: Number){
