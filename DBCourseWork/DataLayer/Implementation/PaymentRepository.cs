@@ -11,7 +11,7 @@ namespace DataLayer.Implementation {
         public async Task<Payment> CreateAsync(Payment item) {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand($"insert into payments([description], group_id, [by_user_id], to_user_id, amount) values (N'{item.Description}', {item.GroupId}, {item.ByUserId}, {item.ForUserId}, {item.Amount})", connection)) {
+                using (SqlCommand command = new SqlCommand($"insert into payments([description], group_id, [user_id], to_user_id, amount) values (N'{item.Description}', {item.GroupId}, {item.ByUserId}, {item.ForUserId}, {item.Amount})", connection)) {
                     await command.ExecuteNonQueryAsync();
                     command.CommandText = "select cast(SCOPE_IDENTITY() as int)";
                     int id = (int)await command.ExecuteScalarAsync();
@@ -39,9 +39,9 @@ namespace DataLayer.Implementation {
                             Description = ((string)reader["description"]).TrimEnd(), 
                             Time = (DateTime)reader["time"], 
                             Amount = (decimal)reader["amount"], 
-                            ByUserId = (int)reader["by_user_id"], 
+                            ByUserId = (int)reader["user_id"], 
                             GroupId = (int)reader["group_id"], 
-                            ForUserId = (int)reader["for_user_id"],
+                            ForUserId = (int)reader["to_user_id"],
                             Confirmed = (int)reader["confirmed"] == 1
                         };
                     }
@@ -57,16 +57,17 @@ namespace DataLayer.Implementation {
                 using(SqlCommand command = new SqlCommand($"select * from payments where group_id = {groupId} and ([user_id] = {userId} or to_user_id = {userId}) order by [time]", connection)) {
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (await reader.ReadAsync()) {
-                        payments.Add(new Payment {
+                        var payment = new Payment {
                             Id = (int)reader["id"],
                             Description = ((string)reader["description"]).TrimEnd(),
                             Time = (DateTime)reader["time"],
                             Amount = (decimal)reader["amount"],
-                            ByUserId = (int)reader["by_user_id"],
+                            ByUserId = (int)reader["user_id"],
                             GroupId = (int)reader["group_id"],
-                            ForUserId = (int)reader["for_user_id"],
-                            Confirmed = (int)reader["confirmed"] == 1
-                        });
+                            ForUserId = (int)reader["to_user_id"],
+                            Confirmed = (bool)reader["confirmed"],
+                        };
+                        payments.Add(payment);
                     }
                 }
             }

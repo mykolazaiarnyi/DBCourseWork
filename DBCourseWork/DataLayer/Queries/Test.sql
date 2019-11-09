@@ -24,4 +24,8 @@ select * from expenses
 select * from expenses_header
 select * from expenses_line
 
+select * from user_groups order by group_id
+
+select * from payments
+insert into payments ([description], group_id, [user_id], to_user_id, amount) values (N'Za labky', 1, 4, 2, 100)
 set transaction isolation level serializable; begin transaction; select dbo.get_users_balance(2, 3, 1); commit
