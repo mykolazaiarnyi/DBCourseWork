@@ -5,44 +5,7 @@
             <app-users-list [group]="group" [users]="users" [user]="user"></app-users-list>
         </mat-tab>
         <mat-tab label="Expenses">
-            <!--form class="form-inline mt-2" [formGroup]="addExpenseForm" (ngSubmit)="addUser(addUserForm.value)">
-                    <div class="form-group mx-sm-3" >
-                        <input class="form-control"
-                            type="text" 
-                            formControlName="amount"
-                            class="form-control" 
-                            placeholder="Amount">
-                    </div>
-                    <div class="form-group mx-sm-3" >
-                        <input class="form-control"
-                            type="text" 
-                            formControlName="description"
-                            class="form-control" 
-                            placeholder="Description">
-                    </div>
-                    <button [disabled]="addExpenseForm.invalid" type="submit" class="btn btn-primary"> Add expense </button>
-                </form>
-                <div *ngIf="alreadyInGroup">
-                    <p class="ml-3 text-danger mb-0">This user is already in group!</p>
-                </div>
-                <div *ngIf="userNotExistsOnAdd">
-                    <p class="ml-3 text-danger mb-0">This user doesn't exist!</p>
-                </div-->
-            <div class="list-group my-2">
-                <div *ngFor="let expense of expenses">
-                    <div class="list-group-item list-group-item-action m-2 w-auto">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="d-inline"> {{ expense.description }} </h3>
-                            <h3 class="d-inline" 
-                                [ngClass]="{
-                                    'text-danger': expense.byUserName !== user.name,
-                                    'text-success': expense.byUserName === user.name
-                                }"> {{ expense.amount }} </h3>
-                        </div>
-                        <p class="my-0">by {{expense.byUserName === user.name ? "You" : expense.byUserName}} at {{expense.time | date:'dd.MM.yyyy HH:mm'}}</p>
-                    </div>
-                </div>
-            </div>
+            <app-expenses-list [group]="group" [expenses]="expenses" [user]="user"></app-expenses-list>
         </mat-tab>
         <mat-tab label="Payments">
                 <div class="list-group my-2">

@@ -79,4 +79,8 @@ export class UserSessionService implements CanActivate {
       catchError(error => of(false))
     )
   }
+
+  addExpense(groupId: number, expense: Expense): Observable<Expense>{
+    return this.http.post<Expense>(`${API_URL}/group/${groupId}/expenses`, expense)
+  }
 }
