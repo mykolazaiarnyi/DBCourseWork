@@ -28,5 +28,6 @@ select * from expenses_line
 select * from user_groups order by group_id
 
 select * from payments
+update payments set confirmed = 0
 insert into payments ([description], group_id, [user_id], to_user_id, amount) values (N'Za labky', 1, 4, 2, 100)
 set transaction isolation level serializable; begin transaction; select dbo.get_users_balance(4, 2, 1); commit

@@ -125,16 +125,18 @@ namespace Application.Controllers
             return Ok();
         }
 
-        [HttpPost("payment")]
-        public async Task<ActionResult<PaymentDto>> AddPaymentAsync([FromBody]PaymentDto payment) {
+        [HttpPost("group/{groupId}/payments")]
+        public async Task<ActionResult<PaymentDto>> AddPaymentAsync(int groupId, [FromBody]PaymentDto payment) {
             var mappedPayment = await _mapper.DtoToPaymentAsync(payment, _userRepository);
+            mappedPayment.GroupId = groupId;
             mappedPayment = await _paymentRepository.CreateAsync(mappedPayment);
             return await _mapper.PaymentToDtoAsync(mappedPayment, _userRepository);
         }
 
-        [HttpPost("expense")]
-        public async Task<ActionResult<ExpenseDto>> AddExpenseAsync([FromBody]ExpenseDto expense) {
+        [HttpPost("group/{groupId}/expenses")]
+        public async Task<ActionResult<ExpenseDto>> AddExpenseAsync(int groupId, [FromBody]ExpenseDto expense) {
             var mappedExpense = await _mapper.DtoToExpenseAsync(expense, _userRepository);
+            mappedExpense.GroupId = groupId;
             mappedExpense = await _expenseRepository.CreateAsync(mappedExpense);
             return await _mapper.ExpenseToDtoAsync(mappedExpense, _userRepository);
         }
