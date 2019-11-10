@@ -65,4 +65,11 @@ export class UserSessionService implements CanActivate {
       tap(response => this.groups[response.id] = response)
     );
   }
+
+  confirmPayment(id: number): Observable<boolean> {
+    return this.http.post(`${API_URL}/payment/${id}`, {}).pipe(
+      map(response => !response),
+      catchError(error => of(false))
+    )
+  }
 }

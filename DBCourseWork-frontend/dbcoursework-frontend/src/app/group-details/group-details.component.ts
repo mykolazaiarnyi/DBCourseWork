@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserSessionService } from '../user-session.service';
 import { ActivatedRoute } from '@angular/router';
-import { User, Payment, Expense, Group } from 'src/types';
+import { User, Payment, Expense, Group, UserWithBalance } from 'src/types';
 
 @Component({
   selector: 'app-group-details',
@@ -11,7 +11,7 @@ import { User, Payment, Expense, Group } from 'src/types';
 export class GroupDetailsComponent implements OnInit {
   group: Group;
   user: User;
-  users: User[];
+  users: UserWithBalance[];
   payments: Payment[];
   expenses: Expense[];
 
@@ -26,5 +26,15 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  confirmPayment(id: number){
+    this.userSession.confirmPayment(id).subscribe(response => {
+      if (response){
+        let payment = this.payments.find(item => item.id === id);
+        payment.confirmed = true;
+        this.users.find(item => item.name === payment.byUser).balance -= payment.amount;
+      }
+    })
   }
 }

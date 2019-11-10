@@ -42,7 +42,7 @@ namespace DataLayer.Implementation {
                             ByUserId = (int)reader["user_id"], 
                             GroupId = (int)reader["group_id"], 
                             ForUserId = (int)reader["to_user_id"],
-                            Confirmed = (int)reader["confirmed"] == 1
+                            Confirmed = (bool)reader["confirmed"]
                         };
                     }
                 }

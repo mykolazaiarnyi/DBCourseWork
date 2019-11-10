@@ -4,7 +4,7 @@
         <mat-tab label="Groups">
             <div class="list-group my-2">
                 <div *ngFor="let user of users">
-                    <div class="list-group-item list-group-item-action m-2 w-auto d-flex justify-content-between" routerLink="/group/{{group.id}}">
+                    <div class="list-group-item list-group-item-action m-2 w-auto d-flex justify-content-between">
                         <h3 class="d-inline"> {{ user.name }} </h3>
                         <h3 class="d-inline" 
                             [ngClass]="{
@@ -19,7 +19,7 @@
         <mat-tab label="Expenses">
                 <div class="list-group my-2">
                         <div *ngFor="let expense of expenses">
-                            <div class="list-group-item list-group-item-action m-2 w-auto" routerLink="/group/{{group.id}}">
+                            <div class="list-group-item list-group-item-action m-2 w-auto">
                                 <div class="d-flex justify-content-between">
                                     <h3 class="d-inline"> {{ expense.description }} </h3>
                                     <h3 class="d-inline" 
@@ -28,20 +28,34 @@
                                             'text-success': expense.byUserName === user.name
                                         }"> {{ expense.amount }} </h3>
                                 </div>
-                                <p class="my-0">by {{expense.byUserName === user.name ? "You" : expense.byUserName}} at {{expense.time | date:'dd.MM.yyyy hh:mm'}}</p>
+                                <p class="my-0">by {{expense.byUserName === user.name ? "You" : expense.byUserName}} at {{expense.time | date:'dd.MM.yyyy HH:mm'}}</p>
+                            </div>
+                        </div>
+                    </div>
+        </mat-tab>
+        <mat-tab label="Payments">
+                <div class="list-group my-2">
+                        <div *ngFor="let payment of payments">
+                            <div class="list-group-item list-group-item-action m-2 w-auto">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="d-inline"> {{ payment.description }} </h3>
+                                    <h3 class="d-inline" 
+                                        [ngClass]="{
+                                            'text-danger': payment.byUser === user.name,
+                                            'text-success': payment.forUser === user.name
+                                        }"> {{ payment.amount }} </h3>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="my-0">
+                                        from {{payment.byUser === user.name ? "You" : payment.byUser}} to {{payment.forUser === user.name ? "You" : payment.forUser}} at {{payment.time | date:'dd.MM.yyyy HH:mm'}}
+                                    </p>
+                                    <div *ngIf="payment.forUser===user.name">
+                                        <button class="btn btn-primary btn-success py-0" [disabled]="payment.confirmed" (click)="confirmPayment(payment.id)">Confirm</button>
+                                    </div>
+                                </div>  
                             </div>
                         </div>
                     </div>
         </mat-tab>
     </mat-tab-group>
-    <!--div *ngSwitchCase="groupTabType.Expenses"> 
-        <div *ngFor="let expense of expenses">
-            {{expense}}
-        </div>
-    </div>
-    <div *ngSwitchCase="groupTabType.Payments">
-        <div *ngFor="let payment of payments">
-            {{payment}}
-        </div>
-    </div-->
 </div>
