@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { UserSessionService } from '../user-session.service';
 import { Router } from '@angular/router';
+import { isNotCurrentUser } from '../validators';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +22,7 @@ export class ProfileComponent implements OnInit {
         this.userSession.user.name,
         [ 
           Validators.required,
-          this.isNotCurrentUser(this.userSession.user.name) 
+          isNotCurrentUser(this.userSession.user.name) 
         ]
       ]
     });
@@ -45,14 +46,5 @@ export class ProfileComponent implements OnInit {
 
   onTextChange(){
     this.nameUsed = false;
-  }
-
-  isNotCurrentUser(name: string): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      if (control.value === name){
-        return {'isCurrentUser': {value: true}};
-      }
-      return null;
-    }
   }
 }
