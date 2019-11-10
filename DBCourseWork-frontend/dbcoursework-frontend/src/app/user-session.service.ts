@@ -54,7 +54,7 @@ export class UserSessionService implements CanActivate {
 
   changeName(user: User): Observable<boolean> {
     return this.http.put(`${API_URL}/user`, user).pipe(
-      map(response => !response),
+      map(response => true),
       tap(result => this.user.name = user.name),
       catchError(error => of(false))
     )
@@ -68,7 +68,14 @@ export class UserSessionService implements CanActivate {
 
   confirmPayment(id: number): Observable<boolean> {
     return this.http.post(`${API_URL}/payment/${id}`, {}).pipe(
-      map(response => !response),
+      map(response => true),
+      catchError(error => of(false))
+    )
+  }
+
+  addUserToGroup(groupId: number, userName: string): Observable<boolean> {
+    return this.http.post(`${API_URL}/user/${this.user.id}/group/${groupId}`, {name: userName}).pipe(
+      map(response => true),
       catchError(error => of(false))
     )
   }

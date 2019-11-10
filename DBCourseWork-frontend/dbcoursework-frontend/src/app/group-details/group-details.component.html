@@ -1,7 +1,25 @@
 <div class="container">
     <h1 class="card-header p-4">{{ group.name }}</h1>
     <mat-tab-group>
-        <mat-tab label="Groups">
+        <mat-tab label="Users">
+            <form class="form-inline mt-2" [formGroup]="addUserForm" (ngSubmit)="addUser(addUserForm.value)">
+                <div class="form-group mx-sm-3" >
+                    <input class="form-control"
+                        [ngClass]="{'border': addUserError, 'border-danger': addUserError}" 
+                        type="text" 
+                        formControlName="name"
+                        class="form-control" 
+                        placeholder="Name"
+                        (input)="onAddUserFormChange()">
+                </div>
+                <button [disabled]="addUserForm.invalid || addUserError" type="submit" class="btn btn-primary"> Add user </button>
+            </form>
+            <div *ngIf="alreadyInGroup">
+                <p class="ml-3 text-danger mb-0">This user is already in group!</p>
+            </div>
+            <div *ngIf="userNotExists">
+                <p class="ml-3 text-danger mb-0">This user doesn't exist!</p>
+            </div>
             <div class="list-group my-2">
                 <div *ngFor="let user of users">
                     <div class="list-group-item list-group-item-action m-2 w-auto d-flex justify-content-between">
