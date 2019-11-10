@@ -11,6 +11,7 @@ import { GroupDetailsComponent } from './group-details/group-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GroupsComponent,
     GroupDetailsComponent,
     ProfileComponent,
-    CreateGroupComponent
+    CreateGroupComponent,
+    UsersListComponent
   ],
   imports: [
     MatTabsModule,
