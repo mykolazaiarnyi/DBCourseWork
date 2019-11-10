@@ -5,7 +5,7 @@
             <app-users-list [group]="group" [users]="users" [user]="user"></app-users-list>
         </mat-tab>
         <mat-tab label="Expenses">
-            <app-expenses-list [group]="group" [expenses]="expenses" [user]="user"></app-expenses-list>
+            <app-expenses-list [group]="group" [expenses]="expenses" [user]="user" (onAddExpense)="onAddExpense($event)"></app-expenses-list>
         </mat-tab>
         <mat-tab label="Payments">
                 <div class="list-group my-2">

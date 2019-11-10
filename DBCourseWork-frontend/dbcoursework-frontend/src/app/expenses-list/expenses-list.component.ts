@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User, Group, Expense } from 'src/types';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserSessionService } from '../user-session.service';
@@ -12,6 +12,8 @@ export class ExpensesListComponent implements OnInit {
   @Input() user: User;
   @Input() expenses: Expense[];
   @Input() group: Group;
+
+  @Output() onAddExpense = new EventEmitter<number>();
 
   addExpenseForm: FormGroup;
   
@@ -33,6 +35,9 @@ export class ExpensesListComponent implements OnInit {
       description: data.description,
       byUserName: this.user.name,
       time: '1.1.1970'
-    }).subscribe(response => this.expenses.push(response));
+    }).subscribe(response => {
+      this.expenses.push(response);
+      this.onAddExpense.emit(response.amount);
+    });
   }
 }
