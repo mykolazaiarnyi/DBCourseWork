@@ -1,4 +1,4 @@
-﻿create trigger create_expense on expenses_total
+﻿create or alter trigger create_expense on expenses_total
 instead of insert
 as
 begin
@@ -16,5 +16,5 @@ begin
 	declare @eh_id int
 	select @eh_id = SCOPE_IDENTITY()
 
-	insert into expenses_line ([user_id], amount, expense_id) select u.id, @amount / @number_of_members, @eh_id from get_users_of_group(@group_id) as u where u.id <> @by_user_id
+	insert into expenses_line ([user_id], amount, expense_id) select u.id, @amount / @number_of_members, @eh_id from get_users_of_group(@group_id, @by_user_id) as u
 end

@@ -27,11 +27,7 @@ namespace DataLayer.Implementation {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand($"insert into expenses_total([description], group_id, [by_user_id], amount) values (N'{item.Description}', {item.GroupId}, {item.ByUserId}, {item.Amount})", connection)) {
                     await command.ExecuteNonQueryAsync();
-                    command.CommandText = "select cast(SCOPE_IDENTITY() as int)";
-                    int id = (int)await command.ExecuteScalarAsync();
-                    item.Id = id;
-                    command.CommandText = $"select [time] from expenses_total where id = {item.Id}";
-                    item.Time = (DateTime)await command.ExecuteScalarAsync();
+                    item.Time = DateTime.Now;
                 }
             }
             return item;
