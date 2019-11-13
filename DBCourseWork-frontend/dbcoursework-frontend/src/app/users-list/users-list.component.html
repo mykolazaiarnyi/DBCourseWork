@@ -17,7 +17,7 @@
     <div *ngIf="userNotExistsOnAdd">
         <p class="ml-3 text-danger mb-0">This user doesn't exist!</p>
     </div>
-    <div class="list-group my-2">
+    <div class="list-group my-2 overflow-auto" style="height: 60vh;">
         <div *ngFor="let user of users">
             <div class="list-group-item list-group-item-action m-2 w-auto d-flex justify-content-between">
                 <h3 class="d-inline"> {{ user.name }} </h3>
