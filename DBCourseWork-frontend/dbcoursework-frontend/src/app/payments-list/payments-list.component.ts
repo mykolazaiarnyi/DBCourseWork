@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { User, Payment, Group } from 'src/types';
+import { User, Payment, Group, UserWithBalance } from 'src/types';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserSessionService } from '../user-session.service';
 import { isNotCurrentUser, isPositiveNumber } from '../validators';
@@ -11,7 +11,7 @@ import { isNotCurrentUser, isPositiveNumber } from '../validators';
 })
 export class PaymentsListComponent implements OnInit {
     @Input() user: User;
-    @Input() users: User[];
+    @Input() users: UserWithBalance[];
     @Input() payments: Payment[];
     @Input() group: Group;
   
