@@ -1,0 +1,50 @@
+<div class="container">
+        <form class="form-inline mt-2" [formGroup]="addPaymentForm" (ngSubmit)="addPayment(addPaymentForm.value)">
+            <div class="form-group mx-sm-3">
+                <input class="form-control"
+                    [ngClass]="{'border': userNotInGroup, 'border-danger': userNotInGroup}"
+                    type="text"
+                    formControlName="user"
+                    placeholder="To user"
+                    (input)="onUserInputChange()">
+            </div>
+            <div class="form-group mx-sm-3">
+                <input class="form-control"
+                    type="text"
+                    formControlName="amount"
+                    placeholder="Amount">
+            </div>
+            <div class="form-group mx-sm-3">
+                <input class="form-control"
+                    type="text"
+                    formControlName="description"
+                    placeholder="Description">
+            </div>
+            <button [disabled]="addPaymentForm.invalid || userNotInGroup" type="submit" class="btn btn-primary"> Add payment </button>
+        </form>
+        <div *ngIf="userNotInGroup">
+            <p class="ml-3 text-danger mb-0">This user not in this group!</p>
+        </div>
+        <div class="list-group my-2 overflow-auto" style="height: 60vh;">
+            <div *ngFor="let payment of payments">
+                <div class="list-group-item list-group-item-action m-2 w-auto">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="d-inline"> {{ payment.description }} </h3>
+                        <h3 class="d-inline" 
+                            [ngClass]="{
+                                'text-danger': payment.byUser === user.name,
+                                'text-success': payment.forUser === user.name
+                            }"> {{ payment.amount }} </h3>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="my-0">
+                            from {{payment.byUser === user.name ? "You" : payment.byUser}} to {{payment.forUser === user.name ? "You" : payment.forUser}} at {{payment.time | date:'dd.MM.yyyy HH:mm'}}
+                        </p>
+                        <div *ngIf="payment.forUser===user.name">
+                            <button class="btn btn-primary btn-success py-0" [disabled]="payment.confirmed" (click)="confirmPayment(payment.id)">Confirm</button>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>

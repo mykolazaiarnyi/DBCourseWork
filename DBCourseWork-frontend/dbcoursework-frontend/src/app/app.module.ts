@@ -13,6 +13,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsersListComponent } from './users-list/users-list.component';
 import { ExpensesListComponent } from './expenses-list/expenses-list.component';
+import { PaymentsListComponent } from './payments-list/payments-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ExpensesListComponent } from './expenses-list/expenses-list.component';
     ProfileComponent,
     CreateGroupComponent,
     UsersListComponent,
-    ExpensesListComponent
+    ExpensesListComponent,
+    PaymentsListComponent
   ],
   imports: [
     MatTabsModule,

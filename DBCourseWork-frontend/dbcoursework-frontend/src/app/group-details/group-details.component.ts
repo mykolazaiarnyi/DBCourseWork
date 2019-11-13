@@ -30,16 +30,6 @@ export class GroupDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
-  confirmPayment(id: number){
-    this.userSession.confirmPayment(id).subscribe(response => {
-      if (response){
-        let payment = this.payments.find(item => item.id === id);
-        payment.confirmed = true;
-        this.users.find(item => item.name === payment.byUser).balance -= payment.amount;
-      }
-    })
-  }
-
   onAddExpense(amount: number){
     this.users.forEach(user => user.balance += amount / this.users.length)
   }
