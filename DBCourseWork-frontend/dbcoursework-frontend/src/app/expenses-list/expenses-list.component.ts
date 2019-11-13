@@ -34,8 +34,7 @@ export class ExpensesListComponent implements OnInit {
     this.userSession.addExpense(this.group.id, {
       amount: data.amount, 
       description: data.description,
-      byUserName: this.user.name,
-      time: '1.1.1970'
+      byUserName: this.user.name
     }).subscribe(response => {
       this.expenses.push(response);
       this.onAddExpense.emit(response.amount);
