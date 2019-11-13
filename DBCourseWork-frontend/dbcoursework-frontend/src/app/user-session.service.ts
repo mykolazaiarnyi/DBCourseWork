@@ -80,7 +80,13 @@ export class UserSessionService implements CanActivate {
     )
   }
 
-  addExpense(groupId: number, expense: Expense): Observable<Expense>{
+  addExpense(groupId: number, expense: Expense | any): Observable<Expense>{
     return this.http.post<Expense>(`${API_URL}/group/${groupId}/expenses`, expense)
+  }
+
+  addPayment(groupId: number, payment: Payment | any): Observable<Payment | null>{
+    return this.http.post<Payment>(`${API_URL}/group/${groupId}/payments`, payment).pipe(
+      catchError(error => of(null))
+    );
   }
 }
