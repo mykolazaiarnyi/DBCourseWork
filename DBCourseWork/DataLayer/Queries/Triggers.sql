@@ -3,7 +3,7 @@ instead of insert
 as
 begin
 	declare @number_of_members int
-	select @number_of_members = (count(*) - 1) from user_groups as ug
+	select @number_of_members = count(*) from user_groups as ug
 		join inserted as i on ug.group_id = i.group_id
 		
 	declare @group_id int
