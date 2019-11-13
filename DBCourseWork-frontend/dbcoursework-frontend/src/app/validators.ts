@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidatorFn, Validators } from "@angular/forms";
 
 export const isNotCurrentUser = (name: string): ValidatorFn => {
   return (control: AbstractControl): {[key: string]: any} | null => {
@@ -8,3 +8,5 @@ export const isNotCurrentUser = (name: string): ValidatorFn => {
     return null;
   }
 }
+
+export const isPositiveNumber: ValidatorFn = Validators.pattern(/^[1-9]\d*$/);

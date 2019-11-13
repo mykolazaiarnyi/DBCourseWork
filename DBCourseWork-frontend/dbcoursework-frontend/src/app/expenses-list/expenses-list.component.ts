@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User, Group, Expense } from 'src/types';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserSessionService } from '../user-session.service';
+import { isPositiveNumber } from '../validators';
 
 @Component({
   selector: 'app-expenses-list',
@@ -21,7 +22,7 @@ export class ExpensesListComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userSession: UserSessionService) {
     this.addExpenseForm = this.formBuilder.group({
-      amount: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      amount: ['', [isPositiveNumber]],
       description: ['', [Validators.required]]
     })
   }
