@@ -31,6 +31,6 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   onAddExpense(amount: number){
-    this.users.forEach(user => user.balance += amount / this.users.length)
+    this.users.forEach(user => user.balance += amount / (this.users.length + 1))
   }
 }
