@@ -16,5 +16,5 @@ begin
 	declare @eh_id int
 	select @eh_id = SCOPE_IDENTITY()
 
-	insert into expenses_line ([user_id], amount, expense_id) select u.id, @amount / @number_of_members, @eh_id from get_users_of_group(@group_id, @by_user_id) as u
+	insert into expenses_line ([user_id], amount, expense_id) select ug.[user_id], @amount / @number_of_members, @eh_id from user_groups ug where group_id = @group_id
 end
