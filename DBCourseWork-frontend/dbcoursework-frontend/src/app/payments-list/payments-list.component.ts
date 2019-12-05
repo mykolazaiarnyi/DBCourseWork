@@ -22,7 +22,7 @@ export class PaymentsListComponent implements OnInit {
                 private formBuilder: FormBuilder) {
       this.addPaymentForm = this.formBuilder.group({
         user: ['', [Validators.required, isNotCurrentUser(this.userSession.user.name)]],
-        amount: ['', [isPositiveNumber]],
+        amount: ['', [isPositiveNumber, Validators.required]],
         description: ['', [Validators.required]]
       });
     }

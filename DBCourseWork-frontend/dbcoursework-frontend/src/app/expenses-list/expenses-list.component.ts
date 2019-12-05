@@ -22,7 +22,7 @@ export class ExpensesListComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userSession: UserSessionService) {
     this.addExpenseForm = this.formBuilder.group({
-      amount: ['', [isPositiveNumber]],
+      amount: ['', [isPositiveNumber, Validators.required]],
       description: ['', [Validators.required]]
     })
   }
